@@ -5,9 +5,14 @@ import { COLORS } from "../style";
 
 import logo from "../assets/sb.png"
 
-const Slide1 = () => {
+type Slide1Props = {
+    onPrevious?: () => void;
+    onNext?: () => void;
+};
+
+const Slide1 = ({ onPrevious, onNext }: Slide1Props) => {
     return (
-        <Container>
+        <Container onPrevious={onPrevious} onNext={onNext}>
             <ImgLogo src={logo} />
             <Title>SPICY BOYS</Title>
             <Link>liberaopreto.vercel.app</Link>
@@ -35,4 +40,8 @@ const Link = styled.p`
     text-decoration: underline;
     letter-spacing: 1.5px;
     margin-top: 1rem;
+
+    @media (max-width: 1224px) {
+        display: none;
+    }
 `;

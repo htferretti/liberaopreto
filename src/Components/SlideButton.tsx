@@ -5,13 +5,15 @@ import { COLORS } from '../style';
 
 type SlideButtonProps = {
     direction: 'left' | 'right';
+    onClick: () => void;
 };
 
-const SlideButton = ({ direction }: SlideButtonProps) => {
+const SlideButton = ({ direction, onClick }: SlideButtonProps) => {
     return (
         <Button
             type="button"
             $direction={direction}
+            onClick={onClick}
             aria-label={direction === 'left' ? 'Voltar slide' : 'Avançar slide'}
         >
             {direction === 'left' ? <CaretLeftFill /> : <CaretRightFill />}

@@ -1,12 +1,18 @@
 import styled from "styled-components";
 import SlideButton from "./SlideButton";
 
-const Container = ({ children }: { children: React.ReactNode }) => {
+type ContainerProps = {
+    children: React.ReactNode;
+    onPrevious?: () => void;
+    onNext?: () => void;
+};
+
+const Container = ({ children, onPrevious, onNext }: ContainerProps) => {
     return (
         <SlideContainer>
             {children}
-            <SlideButton direction="left" />
-            <SlideButton direction="right" />
+            {onPrevious && <SlideButton direction="left" onClick={onPrevious} />}
+            {onNext && <SlideButton direction="right" onClick={onNext} />}
         </SlideContainer>
     )
 }

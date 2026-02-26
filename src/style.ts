@@ -5,6 +5,7 @@ export const COLORS = {
   white: '#FFFFFF',
   black: '#000000',
   blue: '#3463CE',
+  green: '#208100'
 } as const;
 
 export const TRANSITIONS = {
