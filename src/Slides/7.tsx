@@ -74,21 +74,6 @@ const Text = styled.h1<{ $right?: boolean }>`
     margin: 16px;
   `;
 
-const List = styled.ul`
-    position: absolute;
-    bottom: 0;
-    margin: 16px;
-    font-size: 18px;
-    color: ${COLORS.black};
-    display: flex;
-    width: 70%;
-    justify-content: space-around;
-
-    li {
-      list-style: disc;
-    }
-`;
-
     const Circle = styled.div`
       position: absolute;
       top: 50%;

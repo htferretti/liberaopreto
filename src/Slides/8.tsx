@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Container from "../Components/Container"
 
-import { Apple } from "react-bootstrap-icons";
 import { COLORS } from "../style";
 
 type Slide8Props = {

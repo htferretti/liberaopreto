@@ -86,7 +86,7 @@ const Slide9 = ({ onPrevious, onNext }: Slide9Props) => {
     return () => controller.abort();
   }, []);
 
-  const { chartPoints, polyline, min, max, startDate, endDate, plotWidth, plotHeight } = useMemo(() => {
+  const { chartPoints, polyline, min, max, startDate, endDate, plotWidth } = useMemo(() => {
     if (!points.length) {
       return {
         chartPoints: [] as Array<StockPoint & { x: number; y: number }>,
@@ -96,7 +96,6 @@ const Slide9 = ({ onPrevious, onNext }: Slide9Props) => {
         startDate: "",
         endDate: "",
         plotWidth: 0,
-        plotHeight: 0,
       };
     }
 
@@ -128,7 +127,6 @@ const Slide9 = ({ onPrevious, onNext }: Slide9Props) => {
       startDate: points[0].date,
       endDate: points[points.length - 1].date,
       plotWidth: localPlotWidth,
-      plotHeight: localPlotHeight,
     };
   }, [points]);
 
