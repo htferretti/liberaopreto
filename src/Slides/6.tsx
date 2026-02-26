@@ -3,7 +3,9 @@ import Container from "../Components/Container"
 
 import { COLORS } from "../style";
 
-import img from "../assets/slide6.jpeg";
+import setor from "../assets/setor.png";
+import note from "../assets/note.jpg";
+import b2c from "../assets/b2c.jpg";
 
 type Slide6Props = {
   onPrevious?: () => void;
@@ -13,12 +15,20 @@ type Slide6Props = {
 const Slide6 = ({ onPrevious, onNext }: Slide6Props) => {
   return (
     <Container onPrevious={onPrevious} onNext={onNext}>
-        <ImgBackground>
-          <Title>Modelo de negócio:</Title>
-          <Text>Setor secundário</Text>
-          <Text>B2C</Text>
-          <Text>Bens duráveis</Text>
-        </ImgBackground>
+        <Div>
+          <Title>Modelo de negócio</Title>
+          <div>
+            <Card img={setor}>
+              Setor Secundário
+            </Card>
+            <Card white img={b2c}>
+              B2C
+            </Card>
+            <Card img={note}>
+              Bens duráveis
+            </Card>
+          </div>
+        </Div>
     </Container>
   )
 }
@@ -26,47 +36,39 @@ const Slide6 = ({ onPrevious, onNext }: Slide6Props) => {
 export default Slide6;
 
 
-const ImgBackground = styled.div`
-    background-image: url(${img});
+const Div = styled.div`
+
+    div {
+      display: flex;
+      gap: 16px;
+    }
+`;
+
+const Card = styled.div<{ img: string, white?: boolean }>`
+    background-image: url(${props => props.img});
     background-size: cover;
     background-position: center;
+    width: 300px;
     position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    border-radius: 16px;
+    height: 400px;
+    padding: 16px;
+    color: ${COLORS.white};
+    font-size: 28px;
+    font-weight: 800;
+    cursor: pointer;
+    ${props => props.white && `
+        color: ${COLORS.black};
+        border: 2px solid ${COLORS.black};
+    `}
 
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.37);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      border: 10px solid rgba(255, 255, 255, 0.22);
-    }
-    
+    &:hover {
+      scale: 1.05;
+    } 
 `;
 
 const Title = styled.h1`
-  position: relative;
-  z-index: 1;
     font-size: 40px;
-    font-weight: 500;
-    margin-bottom: 32px;
-    text-shadow: 0px 4px 4px rgb(255, 255, 255);
-  color: ${COLORS.black};
+    font-weight: 800;
+    margin-bottom: 16px;
 `;
-
-const Text = styled.h1`
-  position: relative;
-  z-index: 1;
-    font-size: 32px;
-    font-weight: 600;
-    color: ${COLORS.blue};
-    margin-bottom: 8px;
-    text-shadow: 0px 4px 4px rgb(255, 255, 255);
-  `;

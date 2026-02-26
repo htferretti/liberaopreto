@@ -62,10 +62,9 @@ export default Slide11;
 
 const Tema = styled.h1`
     position: absolute;
-    left: 0;
     top: 0;
-    font-size: 24px;
-    font-weight: 400;
+    font-size: 40px;
+    font-weight: 900;
     margin: 16px;
   `;
 

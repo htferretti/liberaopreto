@@ -13,13 +13,13 @@ type Slide67Props = {
 const Slide67 = ({ onPrevious, onNext }: Slide67Props) => {
   return (
     <Container onPrevious={onPrevious} onNext={onNext}>
-        <Nome>Michael Porter</Nome>
         <Grid>
           <ul>
             <li>Marca</li>
             <li>Design</li>
             <li>Experiência</li>
             <li>Privacidade</li>
+            <Nome>- Michael Porter</Nome>
           </ul>
           <img src={img} alt="76" />
         </Grid>
@@ -45,7 +45,7 @@ const Grid = styled.div`
     li {
       margin: 16px 0;
       list-style: disc;
-      font-size: 22px;
+      font-size: 28px;
     }
   }
 
@@ -62,11 +62,9 @@ const Grid = styled.div`
 `;
 
 const Nome = styled.h1`
-    position: absolute;
-    top: 0;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 400;
-    margin: 32px;
+    margin-top: 32px;
     color: ${COLORS.blue};
     font-weight: 500;
   `;
@@ -77,7 +75,7 @@ const Nome = styled.h1`
     margin: 16px;
     padding: 8px 32px;
     border-radius: 32px;
-    font-size: 18px;
+    font-size: 24px;
     color: ${COLORS.white};
     background: ${COLORS.black};
 `;

@@ -10,34 +10,19 @@ type Slide3Props = {
 };
 
 const Slide3 = ({ onPrevious, onNext }: Slide3Props) => {
+  const handleOpenVideo = () => {
+    window.open("https://www.youtube.com/watch?v=-ueUb6PNwbs", "_blank", "noopener,noreferrer");
+  };
+
   return (
     <Container onPrevious={onPrevious} onNext={onNext}>
-        <Tema>Tema sorteado: <span>bens duráveis</span></Tema>
-        <AppleIcon />
+        <AppleIcon onClick={handleOpenVideo} />
     </Container>
   )
 }
 
 export default Slide3;
 
-
-const Tema = styled.h1`
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-size: 24px;
-    font-weight: 400;
-    margin: 16px;
-
-    span {
-      color: ${COLORS.blue};
-      font-weight: 500;
-    }
-
-    @media (max-width: 1224px) {
-        display: none;
-    }
-  `;
 
 const AppleIcon = styled(Apple)`
     font-size: 150px;

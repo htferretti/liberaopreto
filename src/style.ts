@@ -13,7 +13,15 @@ export const TRANSITIONS = {
   slow: '0.5s',
 } as const;
 
+
+
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: "San Francisco";
+    font-weight: 400;
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+  }
+
   * {
     padding: 0;
     margin: 0;
@@ -21,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     text-decoration: none;
     list-style: none;
-    font-family: Roboto, sans-serif;
+    font-family: "San Francisco", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     transition: ${TRANSITIONS.default};
   }
 

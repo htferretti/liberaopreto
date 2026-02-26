@@ -65,11 +65,11 @@ export default Slide7;
 
 const Text = styled.h1<{ $right?: boolean }>`
     position: absolute;
-  left: ${(props) => (props.$right ? "auto" : "0")};
-  right: ${(props) => (props.$right ? "0" : "auto")};
-  color: ${(props) => (props.$right ? COLORS.blue : COLORS.black)};
+    left: ${(props) => (props.$right ? "auto" : "0")};
+    right: ${(props) => (props.$right ? "0" : "auto")};
+    color: ${(props) => (props.$right ? COLORS.blue : COLORS.black)};
     top: 0;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 400;
     margin: 16px;
   `;

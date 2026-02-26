@@ -15,9 +15,11 @@ const Slide13 = ({ onPrevious, onNext }: Slide13Props) => {
     <Container onPrevious={onPrevious} onNext={onNext}>
         <ImgBackground>
           <Title>Público alvo:</Title>
-          <Text>B2C (consumidor final)</Text>
+          <div>
+            <Text>B2C (consumidor final)</Text>
           <Text>Perfil: maior poder aquisitivo e busca por status</Text>
           <Text>Comportamento: valoriza design, desempenho e ecossistema integrado</Text>
+          </div>
         </ImgBackground>
     </Container>
   )
@@ -49,6 +51,12 @@ const ImgBackground = styled.div`
       border: 10px solid rgba(255, 255, 255, 0.22);
     }
     
+
+    div {
+      background: ${COLORS.white};
+      padding: 24px;
+      border-radius: 32px;
+    }
 `;
 
 const Title = styled.h1`
@@ -66,7 +74,7 @@ const Text = styled.h1`
   z-index: 1;
     font-size: 26px;
     font-weight: 400;
-    color: ${COLORS.blue};
+    color: ${COLORS.black};
     margin-bottom: 8px;
     text-shadow: 0px 4px 4px rgb(255, 255, 255);
   `;

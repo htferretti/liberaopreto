@@ -153,7 +153,7 @@ const Slide9 = ({ onPrevious, onNext }: Slide9Props) => {
 
   return (
     <Container onPrevious={onPrevious} onNext={onNext}>
-        <Tema>Capital aberto: <span>AAPL34</span></Tema>
+        <Tema>Capital aberto: <span>AAPL34</span><br /><p>NASDAQ</p></Tema>
         <ChartWrapper>
           {loading && <Status>Carregando gráfico...</Status>}
 
@@ -213,13 +213,17 @@ export default Slide9;
 const Tema = styled.h1`
     position: absolute;
     top: 0;
-    font-size: 24px;
-    font-weight: 400;
+    font-size: 40px;
+    font-weight: 900;
     margin: 16px;
 
     span {
       color: ${COLORS.blue};
-      font-weight: 700;
+    }
+
+    p {
+      text-align: center;
+      font-size: 24px;
     }
   `;
 
@@ -300,7 +304,7 @@ const Tema = styled.h1`
       margin: 0 12px 8px;
       color: ${COLORS.black};
       font-size: 24px;
-      font-weight: 300;
+      font-weight: 900;
     `;
 
     const Status = styled.p`
