@@ -17,11 +17,12 @@ import Slide12 from "./Slides/12";
 import Slide13 from "./Slides/13";
 import Slide14 from "./Slides/14";
 import Slide15 from "./Slides/15";
+import Slide16 from "./Slides/16";
 
 function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const slides = [Slide1, Slide2, Slide3, Slide4, Slide6, Slide67, Slide7, Slide8, Slide9, Slide10, Slide11, Slide12, Slide13, Slide14, Slide15];
+  const slides = [Slide1, Slide2, Slide3, Slide4, Slide6, Slide67, Slide7, Slide8, Slide9, Slide10, Slide11, Slide12, Slide13, Slide14, Slide15, Slide16];
   const ActiveSlide = slides[currentSlide];
 
   const goToNextSlide = () => {

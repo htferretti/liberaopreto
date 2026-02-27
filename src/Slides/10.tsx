@@ -45,7 +45,7 @@ const Tema = styled.h1`
     position: absolute;
     left: 0;
     top: 0;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 400;
     margin: 16px;
   `;

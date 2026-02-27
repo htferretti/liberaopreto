@@ -3,7 +3,9 @@ import Container from "../Components/Container"
 
 import { COLORS } from "../style";
 
-import img from "../assets/slide13.jpg";
+import consumidor from "../assets/consumidorfinal.jpg";
+import perfil from "../assets/perfil.jpg";
+import ck from "../assets/ck.jpg";
 
 type Slide13Props = {
   onPrevious?: () => void;
@@ -13,14 +15,23 @@ type Slide13Props = {
 const Slide13 = ({ onPrevious, onNext }: Slide13Props) => {
   return (
     <Container onPrevious={onPrevious} onNext={onNext}>
-        <ImgBackground>
-          <Title>Público alvo:</Title>
+        <Div>
+          <Title>Público alvo</Title>
           <div>
-            <Text>B2C (consumidor final)</Text>
-          <Text>Perfil: maior poder aquisitivo e busca por status</Text>
-          <Text>Comportamento: valoriza design, desempenho e ecossistema integrado</Text>
+            <Card white img={consumidor}>
+              <h3>B2C</h3>
+              <p>Consumidor final</p>
+            </Card>
+            <Card white img={perfil}>
+              <h3>Perfil:</h3>
+              <p>Maior poder aquisitivo e busca por status</p>
+            </Card>
+            <Card img={ck}>
+              <h3>Comportamento</h3>
+              <p>Valoriza design, desempenho e ecossistema integrado</p>
+            </Card>
           </div>
-        </ImgBackground>
+        </Div>
     </Container>
   )
 }
@@ -28,53 +39,49 @@ const Slide13 = ({ onPrevious, onNext }: Slide13Props) => {
 export default Slide13;
 
 
-const ImgBackground = styled.div`
-    background-image: url(${img});
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.37);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      border: 10px solid rgba(255, 255, 255, 0.22);
-    }
-    
+const Div = styled.div`
 
     div {
-      background: ${COLORS.white};
-      padding: 24px;
-      border-radius: 32px;
+      display: flex;
+      gap: 16px;
     }
+`;
+
+const Card = styled.div<{ img: string, white?: boolean }>`
+    background-image: url(${props => props.img});
+    background-size: cover;
+    background-position: center;
+    width: 300px;
+    position: relative;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    padding: 16px;
+    color: ${COLORS.white};
+    cursor: pointer;
+    ${props => props.white && `
+        color: ${COLORS.black};
+        border: 2px solid ${COLORS.black};
+    `}
+
+    h3 {
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    p {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    &:hover {
+      scale: 1.05;
+    } 
 `;
 
 const Title = styled.h1`
-  position: relative;
-  z-index: 1;
     font-size: 40px;
-    font-weight: 500;
-    margin-bottom: 32px;
-    text-shadow: 0px 4px 4px rgb(255, 255, 255);
-  color: ${COLORS.black};
+    font-weight: 800;
+    margin-bottom: 16px;
 `;
-
-const Text = styled.h1`
-  position: relative;
-  z-index: 1;
-    font-size: 26px;
-    font-weight: 400;
-    color: ${COLORS.black};
-    margin-bottom: 8px;
-    text-shadow: 0px 4px 4px rgb(255, 255, 255);
-  `;

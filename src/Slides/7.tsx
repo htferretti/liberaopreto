@@ -69,7 +69,7 @@ const Text = styled.h1<{ $right?: boolean }>`
     right: ${(props) => (props.$right ? "0" : "auto")};
     color: ${(props) => (props.$right ? COLORS.blue : COLORS.black)};
     top: 0;
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 400;
     margin: 16px;
   `;

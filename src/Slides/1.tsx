@@ -41,6 +41,8 @@ const Link = styled.p`
     letter-spacing: 1.5px;
     margin-top: 1rem;
 
+    display: none;
+
     @media (max-width: 1224px) {
         display: none;
     }

@@ -3,7 +3,10 @@ import Container from "../Components/Container"
 
 import { COLORS } from "../style";
 
-import img from "../assets/76.jpeg";
+import marca from "../assets/marca.jpg";
+import design from "../assets/design.jpg";
+import experiencia from "../assets/experiencia.png";
+import privacidade from "../assets/privacidade.png";
 
 type Slide67Props = {
   onPrevious?: () => void;
@@ -13,17 +16,24 @@ type Slide67Props = {
 const Slide67 = ({ onPrevious, onNext }: Slide67Props) => {
   return (
     <Container onPrevious={onPrevious} onNext={onNext}>
-        <Grid>
-          <ul>
-            <li>Marca</li>
-            <li>Design</li>
-            <li>Experiência</li>
-            <li>Privacidade</li>
-            <Nome>- Michael Porter</Nome>
-          </ul>
-          <img src={img} alt="76" />
-        </Grid>
-        <Lockin>Lock-in</Lockin>
+        <Div>
+          <Title>Lock-in</Title>
+          <div>
+            <Card white img={marca}>
+              Marca
+            </Card>
+            <Card img={design}>
+              Design
+            </Card>
+            <Card white img={experiencia}>
+              Experiência
+            </Card>
+            <Card img={privacidade}>
+              Privacidade
+            </Card>
+          </div>
+          <p>- Michael Porter</p>
+        </Div>
     </Container>
   )
 }
@@ -31,51 +41,46 @@ const Slide67 = ({ onPrevious, onNext }: Slide67Props) => {
 export default Slide67;
 
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-
-  ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 220px;
-
-    li {
-      margin: 16px 0;
-      list-style: disc;
-      font-size: 28px;
+const Div = styled.div`
+    div {
+      display: flex;
+      gap: 16px;
     }
-  }
 
-  img {
-    width: 80%;
+    p {
+      font-size: 24px;
+      font-weight: 600;
+      margin-top: 16px;
+      text-align: center;
+      color: ${COLORS.blue};
+    }
+`;
+
+const Card = styled.div<{ img: string, white?: boolean }>`
+    background-image: url(${props => props.img});
+    background-size: cover;
+    background-position: center;
+    width: 240px;
+    position: relative;
     border-radius: 16px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    height: 400px;
+    padding: 16px;
+    color: ${COLORS.white};
+    font-size: 28px;
+    font-weight: 800;
     cursor: pointer;
+    ${props => props.white && `
+        color: ${COLORS.black};
+        border: 2px solid ${COLORS.black};
+    `}
 
     &:hover {
       scale: 1.05;
-    }
-  }
+    } 
 `;
 
-const Nome = styled.h1`
-    font-size: 28px;
-    font-weight: 400;
-    margin-top: 32px;
-    color: ${COLORS.blue};
-    font-weight: 500;
-  `;
-
-    const Lockin = styled.div`
-    position: absolute;
-    bottom: 0;
-    margin: 16px;
-    padding: 8px 32px;
-    border-radius: 32px;
-    font-size: 24px;
-    color: ${COLORS.white};
-    background: ${COLORS.black};
+const Title = styled.h1`
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 16px;
 `;
