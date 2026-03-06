@@ -34,6 +34,10 @@ const Pedro = styled.div`
 const Title = styled.div`
     font-size: 64px;
     font-weight: 800;
+
+    @media (max-width: 1224px) {
+        font-size: 40px;
+    }
 `;
 
 const NameList = styled.ul`
@@ -45,11 +49,7 @@ const NameList = styled.ul`
       }
 
   @media (max-width: 1224px) {
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: none;
     
     li {
       font-size: 20px;

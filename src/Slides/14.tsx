@@ -115,4 +115,8 @@ const Text = styled.p`
   line-height: 1.4;
   max-width: 640px;
   text-align: center;
+
+  @media (max-width: 1223px) {
+    display: none;
+  }
 `;

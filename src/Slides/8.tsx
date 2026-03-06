@@ -38,12 +38,28 @@ const Tema = styled.h1`
     font-size: 32px;
     font-weight: 400;
     margin: 16px;
+
+    @media (max-width: 1223px) {
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 22px;
+      margin: 10px 0;
+      width: 90vw;
+    }
   `;
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
+
+  @media (max-width: 1223px) {
+    width: 95vw;
+    margin-top: 42px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 `;
 
 const Box = styled.div`
@@ -68,5 +84,31 @@ const Box = styled.div`
 
   h1 {
     margin-top: 16px;
+  }
+
+  @media (max-width: 1223px) {
+    padding: 14px;
+    border-radius: 10px;
+
+    &:hover {
+      background: ${COLORS.black};
+      scale: 1;
+    }
+
+    h2 {
+      font-size: 18px;
+      padding-bottom: 8px;
+    }
+
+    h1 {
+      margin-top: 10px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    p {
+      margin-top: 6px;
+      font-size: 14px;
+    }
   }
 `;

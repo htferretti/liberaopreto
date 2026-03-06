@@ -23,14 +23,14 @@ const Slide7 = ({ onPrevious, onNext }: Slide7Props) => {
   const [hoveredProduct, setHoveredProduct] = useState("");
 
   const products = [
-    { name: "Acessórios", image: Acessorios },
-    { name: "AirPods", image: AirPods },
-    { name: "AirTag", image: AirTag },
-    { name: "Apple TV", image: AppleTv },
-    { name: "Apple Watch", image: AppleWatch },
-    { name: "Mac", image: Mac },
-    { name: "iPad", image: iPad },
-    { name: "iPhone", image: iPhone },
+    { name: "Acessórios", image: Acessorios, link: "https://www.apple.com/br/shop/accessories/all" },
+    { name: "AirPods", image: AirPods, link: "https://www.apple.com/br/airpods/" },
+    { name: "AirTag", image: AirTag, link: "https://www.apple.com/br/airtag/" },
+    { name: "Apple TV", image: AppleTv, link: "https://www.apple.com/br/apple-tv-4k/" },
+    { name: "Apple Watch", image: AppleWatch, link: "https://www.apple.com/br/apple-watch/" },
+    { name: "Mac", image: Mac, link: "https://www.apple.com/br/mac/" },
+    { name: "iPad", image: iPad, link: "https://www.apple.com/br/ipad/" },
+    { name: "iPhone", image: iPhone, link: "https://www.apple.com/br/iphone/" },
   ];
 
   return (
@@ -50,12 +50,15 @@ const Slide7 = ({ onPrevious, onNext }: Slide7Props) => {
           ))}
           <CenterLabel $visible={Boolean(hoveredProduct)}>{hoveredProduct}</CenterLabel>
         </Circle>
-        {/* <List>
-          <li>Marca</li>
-          <li>Design</li>
-          <li>Experiência</li>
-          <li>Privacidade</li>
-        </List> */}
+
+        <MobileGrid>
+          {products.map((product) => (
+            <MobileCard key={product.name} href={product.link} target="_blank" rel="noreferrer">
+              <ProductImage src={product.image} alt={product.name} />
+              <span>{product.name}</span>
+            </MobileCard>
+          ))}
+        </MobileGrid>
     </Container>
   )
 }
@@ -72,6 +75,16 @@ const Text = styled.h1<{ $right?: boolean }>`
     font-size: 32px;
     font-weight: 400;
     margin: 16px;
+
+    @media (max-width: 1223px) {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 22px;
+      margin: 10px 0;
+      width: 90vw;
+    }
   `;
 
     const Circle = styled.div`
@@ -81,6 +94,10 @@ const Text = styled.h1<{ $right?: boolean }>`
       width: 520px;
       height: 520px;
       transform: translate(-50%, -50%);
+
+      @media (max-width: 1223px) {
+        display: none;
+      }
     `;
 
     const Item = styled.div`
@@ -98,6 +115,18 @@ const Text = styled.h1<{ $right?: boolean }>`
       &:hover {
         transform: rotate(calc(var(--i) * 45deg)) translate(var(--radius)) rotate(calc(var(--i) * -45deg)) scale(1.2);
         z-index: 2;
+      }
+
+      @media (max-width: 1223px) {
+        --radius: 120px;
+        width: 78px;
+        height: 78px;
+        margin: -39px;
+
+        &:hover {
+          transform: rotate(calc(var(--i) * 45deg)) translate(var(--radius)) rotate(calc(var(--i) * -45deg));
+          z-index: 1;
+        }
       }
     `;
 
@@ -121,4 +150,40 @@ const Text = styled.h1<{ $right?: boolean }>`
       pointer-events: none;
       text-align: center;
       width: 220px;
+
+      @media (max-width: 1223px) {
+        display: none;
+      }
+    `;
+
+    const MobileGrid = styled.div`
+      display: none;
+
+      @media (max-width: 1223px) {
+        width: 95vw;
+        margin-top: 48px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+    `;
+
+    const MobileCard = styled.a`
+      border: 1px solid ${COLORS.black};
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      color: ${COLORS.black};
+      min-height: 122px;
+
+      span {
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+      }
     `;

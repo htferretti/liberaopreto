@@ -27,11 +27,20 @@ const ImgLogo = styled.img`
     width: 200px;
     height: 200px;
     object-fit: contain;
+
+    @media (max-width: 1224px) {
+        width: 150px;
+        height: 150px;
+    }   
 `;
 
 const Title = styled.h1`
     font-size: 54px;
     color: ${COLORS.black};
+
+    @media (max-width: 1224px) {
+        font-size: 40px;
+    }
 `;
 
 const Link = styled.p`
@@ -40,8 +49,6 @@ const Link = styled.p`
     text-decoration: underline;
     letter-spacing: 1.5px;
     margin-top: 1rem;
-
-    display: none;
 
     @media (max-width: 1224px) {
         display: none;

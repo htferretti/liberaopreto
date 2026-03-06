@@ -7,6 +7,8 @@ import img1 from "../assets/ino1.png";
 import img2 from "../assets/ino2.png";
 import img3 from "../assets/ino3.jpg";
 
+import mordida from "../assets/mordida.png";
+
 type Slide15Props = {
   onPrevious?: () => void;
   onNext?: () => void;
@@ -28,6 +30,7 @@ const Slide15 = ({ onPrevious, onNext }: Slide15Props) => {
               <p>Fortes tendências no aspecto da sustentabilidade, reforçando a reciclagem de seus produtos e redução bruta de emissões de CO2 até 2030. Essa abordagem pode ser analisada como uma resposta às acusações de obsolescência programada, direcionadas ao excesso de produção e baixa vida útil.</p>
             </Card>
           </div>
+          <Mordida src={mordida} alt="Mordida" />
         </Div>
     </Container>
   )
@@ -36,11 +39,25 @@ const Slide15 = ({ onPrevious, onNext }: Slide15Props) => {
 export default Slide15;
 
 
+const Mordida = styled.img`
+  display: none;
+  width: 200px;
+  height: auto;
+
+  @media (max-width: 1223px) {
+    display: block; 
+  }
+`;
+
 const Div = styled.div`
 
     div {
       display: flex;
       gap: 16px;
+
+      @media (max-width: 1223px) {
+        display: none;
+      }
     }
 `;
 

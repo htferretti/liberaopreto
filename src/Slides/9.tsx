@@ -18,6 +18,35 @@ type StockPoint = {
 const CHART_WIDTH = 760;
 const CHART_HEIGHT = 340;
 const CHART_PADDING = 24;
+const STOCK_CACHE_KEY = "slide9:aapl34sa:points";
+
+let memoryCache: StockPoint[] | null = null;
+
+const parseStockPoints = (data: any): StockPoint[] => {
+  const result = data?.chart?.result?.[0];
+  const timestamps: number[] = result?.timestamp ?? [];
+  const closes: Array<number | null> = result?.indicators?.quote?.[0]?.close ?? [];
+
+  return timestamps
+    .map((timestamp, index) => {
+      const close = closes[index];
+
+      if (typeof close !== "number" || close <= 0) {
+        return null;
+      }
+
+      return {
+        timestamp,
+        date: new Date(timestamp * 1000).toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }),
+        close,
+      };
+    })
+    .filter((point): point is StockPoint => point !== null);
+};
 
 const Slide9 = ({ onPrevious, onNext }: Slide9Props) => {
   const [points, setPoints] = useState<StockPoint[]>([]);
@@ -32,49 +61,60 @@ const Slide9 = ({ onPrevious, onNext }: Slide9Props) => {
       setLoading(true);
       setError("");
 
+      if (memoryCache?.length) {
+        setPoints(memoryCache);
+        setLoading(false);
+        return;
+      }
+
+      const cached = localStorage.getItem(STOCK_CACHE_KEY);
+
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached) as StockPoint[];
+
+          if (Array.isArray(parsed) && parsed.length) {
+            memoryCache = parsed;
+            setPoints(parsed);
+            setLoading(false);
+            return;
+          }
+        } catch {
+          localStorage.removeItem(STOCK_CACHE_KEY);
+        }
+      }
+
       try {
-        const response = await fetch(
+        let response = await fetch(
           "/api/yahoo/v8/finance/chart/AAPL34.SA?range=max&interval=1wk",
           { signal: controller.signal }
         );
 
+        if (response.status === 429) {
+          await new Promise((resolve) => setTimeout(resolve, 800));
+          response = await fetch(
+            "/api/yahoo/v8/finance/chart/AAPL34.SA?range=max&interval=1wk",
+            { signal: controller.signal }
+          );
+        }
+
         if (!response.ok) {
-          throw new Error("Falha ao buscar cotação.");
+          throw new Error(response.status === 429 ? "Limite de requisições temporário." : "Falha ao buscar cotação.");
         }
 
         const data = await response.json();
-        const result = data?.chart?.result?.[0];
-        const timestamps: number[] = result?.timestamp ?? [];
-        const closes: Array<number | null> = result?.indicators?.quote?.[0]?.close ?? [];
-
-        const parsedPoints = timestamps
-          .map((timestamp, index) => {
-            const close = closes[index];
-
-            if (typeof close !== "number" || close <= 0) {
-              return null;
-            }
-
-            return {
-              timestamp,
-              date: new Date(timestamp * 1000).toLocaleDateString("pt-BR", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              }),
-              close,
-            };
-          })
-          .filter((point): point is StockPoint => point !== null);
+        const parsedPoints = parseStockPoints(data);
 
         if (!parsedPoints.length) {
           throw new Error("Sem dados para exibir.");
         }
 
+        memoryCache = parsedPoints;
+        localStorage.setItem(STOCK_CACHE_KEY, JSON.stringify(parsedPoints));
         setPoints(parsedPoints);
       } catch (loadError) {
         if ((loadError as Error).name !== "AbortError") {
-          setError("Não foi possível carregar o gráfico agora.");
+          setError((loadError as Error).message || "Não foi possível carregar o gráfico agora.");
         }
       } finally {
         setLoading(false);
@@ -132,19 +172,35 @@ const Slide9 = ({ onPrevious, onNext }: Slide9Props) => {
 
   const hoveredPoint = hoverIndex !== null ? chartPoints[hoverIndex] : null;
 
-  const handleMouseMove = (event: React.MouseEvent<SVGSVGElement>) => {
+  const updateHoverByClientX = (clientX: number, rect: DOMRect) => {
     if (!chartPoints.length) {
       return;
     }
 
-    const rect = event.currentTarget.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const normalizedX = Math.min(Math.max(mouseX, CHART_PADDING), CHART_WIDTH - CHART_PADDING);
+    const relativeClientX = clientX - rect.left;
+    const svgX = (relativeClientX / rect.width) * CHART_WIDTH;
+    const normalizedX = Math.min(Math.max(svgX, CHART_PADDING), CHART_WIDTH - CHART_PADDING);
     const relativeX = normalizedX - CHART_PADDING;
     const index = Math.round((relativeX / plotWidth) * (chartPoints.length - 1));
     const clampedIndex = Math.min(Math.max(index, 0), chartPoints.length - 1);
 
     setHoverIndex(clampedIndex);
+  };
+
+  const handleMouseMove = (event: React.MouseEvent<SVGSVGElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    updateHoverByClientX(event.clientX, rect);
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<SVGSVGElement>) => {
+    const touch = event.touches[0];
+
+    if (!touch) {
+      return;
+    }
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    updateHoverByClientX(touch.clientX, rect);
   };
 
   const handleMouseLeave = () => {
@@ -171,6 +227,8 @@ const Slide9 = ({ onPrevious, onNext }: Slide9Props) => {
                   viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
+                  onTouchStart={handleTouchMove}
+                  onTouchMove={handleTouchMove}
                 >
       
                   <Line points={polyline} />
@@ -191,8 +249,8 @@ const Slide9 = ({ onPrevious, onNext }: Slide9Props) => {
                 {hoveredPoint && (
                   <HoverTooltip
                     style={{
-                      left: `${hoveredPoint.x}px`,
-                      top: `${hoveredPoint.y}px`,
+                      left: `${(hoveredPoint.x / CHART_WIDTH) * 100}%`,
+                      top: `${(hoveredPoint.y / CHART_HEIGHT) * 100}%`,
                     }}
                   >
                     <strong>R$ {hoveredPoint.close.toFixed(2)}</strong>
@@ -225,6 +283,10 @@ const Tema = styled.h1`
       text-align: center;
       font-size: 24px;
     }
+
+    @media (max-width: 1223px) {
+      display: none;
+    }
   `;
 
     const ChartWrapper = styled.div`
@@ -240,6 +302,14 @@ const Tema = styled.h1`
       flex-direction: column;
       justify-content: flex-start;
       gap: 8px;
+
+      @media (max-width: 1223px) {
+        top: 50%;
+        width: 96vw;
+        height: auto;
+        padding: 8px;
+        gap: 6px;
+      }
     `;
 
     const ChartArea = styled.div`
@@ -247,12 +317,25 @@ const Tema = styled.h1`
       width: ${CHART_WIDTH}px;
       height: ${CHART_HEIGHT}px;
       margin: 0 auto;
+
+      @media (max-width: 1223px) {
+        width: 100%;
+        height: auto;
+        aspect-ratio: ${CHART_WIDTH} / ${CHART_HEIGHT};
+      }
     `;
 
     const ChartSvg = styled.svg`
       width: ${CHART_WIDTH}px;
       height: ${CHART_HEIGHT}px;
       cursor: crosshair;
+
+      @media (max-width: 1223px) {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        touch-action: none;
+      }
     `;
 
     const Line = styled.polyline`
@@ -296,6 +379,19 @@ const Tema = styled.h1`
         color: ${COLORS.white};
         font-size: 12px;
       }
+
+      @media (max-width: 1223px) {
+        min-width: 100px;
+        padding: 5px 8px;
+
+        strong {
+          font-size: 12px;
+        }
+
+        span {
+          font-size: 11px;
+        }
+      }
     `;
 
     const ChartInfo = styled.div`
@@ -305,6 +401,12 @@ const Tema = styled.h1`
       color: ${COLORS.black};
       font-size: 24px;
       font-weight: 900;
+
+      @media (max-width: 1223px) {
+        margin: 0 4px 6px;
+        font-size: 14px;
+        gap: 8px;
+      }
     `;
 
     const Status = styled.p`
@@ -312,4 +414,8 @@ const Tema = styled.h1`
       color: ${COLORS.black};
       font-size: 18px;
       font-weight: 400;
+
+      @media (max-width: 1223px) {
+        font-size: 14px;
+      }
     `;

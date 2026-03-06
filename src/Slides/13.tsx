@@ -18,11 +18,11 @@ const Slide13 = ({ onPrevious, onNext }: Slide13Props) => {
         <Div>
           <Title>Público alvo</Title>
           <div>
-            <Card white img={consumidor}>
+            <Card $white img={consumidor}>
               <h3>B2C</h3>
               <p>Consumidor final</p>
             </Card>
-            <Card white img={perfil}>
+            <Card $white img={perfil}>
               <h3>Perfil:</h3>
               <p>Maior poder aquisitivo e busca por status</p>
             </Card>
@@ -45,9 +45,18 @@ const Div = styled.div`
       display: flex;
       gap: 16px;
     }
+
+    @media (max-width: 1223px) {
+      width: 95vw;
+
+      div {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
 `;
 
-const Card = styled.div<{ img: string, white?: boolean }>`
+const Card = styled.div<{ img: string, $white?: boolean }>`
     background-image: url(${props => props.img});
     background-size: cover;
     background-position: center;
@@ -60,7 +69,7 @@ const Card = styled.div<{ img: string, white?: boolean }>`
     padding: 16px;
     color: ${COLORS.white};
     cursor: pointer;
-    ${props => props.white && `
+    ${props => props.$white && `
         color: ${COLORS.black};
         border: 2px solid ${COLORS.black};
     `}
@@ -77,11 +86,35 @@ const Card = styled.div<{ img: string, white?: boolean }>`
 
     &:hover {
       scale: 1.05;
-    } 
+    }
+
+    @media (max-width: 1223px) {
+      width: 100%;
+      height: 160px;
+      border-radius: 10px;
+      padding: 10px;
+
+      h3 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 15px;
+      }
+
+      &:hover {
+        scale: 1;
+      }
+    }
 `;
 
 const Title = styled.h1`
     font-size: 40px;
     font-weight: 800;
     margin-bottom: 16px;
+
+    @media (max-width: 1223px) {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
 `;

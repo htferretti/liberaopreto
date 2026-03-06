@@ -111,6 +111,11 @@ const Title = styled.h1`
     font-size: 32px;
     font-weight: 300;
     margin-bottom: 20px;
+
+    @media (max-width: 1223px) {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
 `;
 
 const Carousel = styled.div`
@@ -124,6 +129,13 @@ const Carousel = styled.div`
   color: ${COLORS.black};
   padding: 18px;
   border-radius: 12px;
+
+  @media (max-width: 1223px) {
+    width: 95vw;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+  }
 `;
 
 const Control = styled.button`
@@ -141,6 +153,12 @@ const Control = styled.button`
   &:hover {
     background: ${COLORS.blue};
   }
+
+  @media (max-width: 1223px) {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+  }
 `;
 
 const Card = styled.div`
@@ -150,6 +168,10 @@ const Card = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 12px 80px;
+
+  @media (max-width: 1223px) {
+    padding: 8px 12px;
+  }
 `;
 
 const Img = styled.div`
@@ -170,12 +192,29 @@ const Img = styled.div`
         scale: 1.5;
       }
     }
+
+    @media (max-width: 1223px) {
+      height: 96px;
+
+      img {
+        cursor: default;
+
+        &:hover {
+          scale: 1;
+        }
+      }
+    }
 `;
 
 const Year = styled.p`
     font-size: 24px;
     font-weight: 500;
     margin-top: 32px;
+
+    @media (max-width: 1223px) {
+      font-size: 18px;
+      margin-top: 14px;
+    }
 `;
 
 const Hover = styled.div`
@@ -185,6 +224,15 @@ const Hover = styled.div`
     font-size: 24px;
     color: ${COLORS.white};
     background: ${COLORS.black};
+
+    @media (max-width: 1223px) {
+      width: 95vw;
+      margin: 14px 0 0;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 15px;
+      text-align: center;
+    }
 `;
 
 const Years = styled.div`
@@ -194,6 +242,10 @@ const Years = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
+
+  @media (max-width: 1223px) {
+    display: none;
+  }
 `;
 
 const YearButton = styled.button<{ $active: boolean }>`

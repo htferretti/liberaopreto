@@ -21,7 +21,7 @@ const Slide6 = ({ onPrevious, onNext }: Slide6Props) => {
             <Card img={setor}>
               Setor Secundário
             </Card>
-            <Card white img={b2c}>
+            <Card $white img={b2c}>
               B2C
             </Card>
             <Card img={note}>
@@ -42,9 +42,18 @@ const Div = styled.div`
       display: flex;
       gap: 16px;
     }
+
+    @media (max-width: 1223px) {
+      width: 95vw;
+
+      div {
+        gap: 8px;
+        flex-direction: column;
+      }
+    }
 `;
 
-const Card = styled.div<{ img: string, white?: boolean }>`
+const Card = styled.div<{ img: string, $white?: boolean }>`
     background-image: url(${props => props.img});
     background-size: cover;
     background-position: center;
@@ -57,18 +66,35 @@ const Card = styled.div<{ img: string, white?: boolean }>`
     font-size: 28px;
     font-weight: 800;
     cursor: pointer;
-    ${props => props.white && `
+    ${props => props.$white && `
         color: ${COLORS.black};
         border: 2px solid ${COLORS.black};
     `}
 
     &:hover {
       scale: 1.05;
-    } 
+    }
+
+    @media (max-width: 1223px) {
+      width: 100%;
+      height: 140px;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 20px;
+
+      &:hover {
+        scale: 1;
+      }
+    }
 `;
 
 const Title = styled.h1`
     font-size: 40px;
     font-weight: 800;
     margin-bottom: 16px;
+
+    @media (max-width: 1223px) {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
 `;

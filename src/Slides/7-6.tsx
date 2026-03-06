@@ -19,13 +19,13 @@ const Slide67 = ({ onPrevious, onNext }: Slide67Props) => {
         <Div>
           <Title>Lock-in</Title>
           <div>
-            <Card white img={marca}>
+            <Card $white img={marca}>
               Marca
             </Card>
             <Card img={design}>
               Design
             </Card>
-            <Card white img={experiencia}>
+            <Card $white img={experiencia}>
               Experiência
             </Card>
             <Card img={privacidade}>
@@ -54,9 +54,22 @@ const Div = styled.div`
       text-align: center;
       color: ${COLORS.blue};
     }
+
+    @media (max-width: 1223px) {
+      width: 95vw;
+
+      div {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      p {
+        display: none;
+      }
+    }
 `;
 
-const Card = styled.div<{ img: string, white?: boolean }>`
+const Card = styled.div<{ img: string, $white?: boolean }>`
     background-image: url(${props => props.img});
     background-size: cover;
     background-position: center;
@@ -69,18 +82,34 @@ const Card = styled.div<{ img: string, white?: boolean }>`
     font-size: 28px;
     font-weight: 800;
     cursor: pointer;
-    ${props => props.white && `
+    ${props => props.$white && `
         color: ${COLORS.black};
         border: 2px solid ${COLORS.black};
     `}
 
     &:hover {
       scale: 1.05;
-    } 
+    }
+
+    @media (max-width: 1223px) {
+      width: 100%;
+      height: 120px;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 20px;
+
+      &:hover {
+        scale: 1;
+      }
+    }
 `;
 
 const Title = styled.h1`
     font-size: 40px;
     font-weight: 800;
     margin-bottom: 16px;
+
+    @media (max-width: 1223px) {
+      display: none;
+    }
 `;

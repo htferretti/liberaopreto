@@ -14,6 +14,7 @@ const Slide16 = ({ onPrevious, onNext }: Slide16Props) => {
         <Agradecimentos>
           <h1>Obrigado pela atenção!</h1>
           <div>SPICY BOYS<img src={img} alt="Pimenta" /></div>
+          <p>Nosso trabalho merece o preto do plinio?</p>
         </Agradecimentos>
     </Container>
   )
@@ -28,6 +29,18 @@ const Agradecimentos = styled.div`
     align-items: center;
     justify-content: center;
     font-size: 32px;
+
+    @media (max-width: 1223px) {
+      display: none;
+    }
+  }
+
+  p {
+    display: none;
+
+    @media (max-width: 1223px) {
+      display: block;
+    }
   }
 
   img {
@@ -36,5 +49,9 @@ const Agradecimentos = styled.div`
 
   h1 {
     font-size: 60px;
+
+    @media (max-width: 1223px) {
+      display: none;
+    }
   }
 `;
