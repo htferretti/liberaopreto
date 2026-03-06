@@ -15,11 +15,11 @@
   ],
   "routes": [
     {
-      "handle": "filesystem"
+      "src": "/api/yahoo/(.*)",
+      "dest": "/api/yahoo/[...path].js?path=$1"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "handle": "filesystem"
     },
     {
       "src": "/.*",
